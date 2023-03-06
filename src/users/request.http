@@ -1,0 +1,23 @@
+### Get All
+
+GET http://localhost:3000/users
+Content-Type: application/json
+
+### Get One
+
+GET http://localhost:3000/users/c0fb4bc5-6781-4e01-b311-119bc0657985
+Content-Type: application/json
+
+### Update One
+
+PATCH  http://localhost:3000/users/07e50547-afdd-426e-895a-8e50fe6095b1
+Content-Type: application/json
+
+{
+    "password": "secret"
+}
+
+### Update One
+
+DELETE   http://localhost:3000/users/41559eef-b9e8-4497-a0fe-02465ec3f20c
+Content-Type: application/json
