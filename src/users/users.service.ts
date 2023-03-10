@@ -15,10 +15,10 @@ export class UsersService {
     @InjectRepository(User) private readonly userRepo: Repository<User>,
   ) {}
 
-  async create(createUserDto: CreateUserDto): Promise<void> {
+  async create(createUserDto: CreateUserDto): Promise<User> {
     const user = this.userRepo.create(createUserDto);
     try {
-      await this.userRepo.save(user);
+      return await this.userRepo.save(user);
     } catch (error) {
       if (error.errno === 19) {
         throw new ConflictException('User already exists.');
