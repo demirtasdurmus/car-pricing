@@ -13,6 +13,11 @@ export class AuthService {
   constructor(private readonly usersService: UsersService) {}
 
   async register(createUserDto: CreateUserDto): Promise<User> {
+    const users = await this.usersService.find(createUserDto.email);
+    if (users.length) {
+      throw new BadRequestException('Email in use');
+    }
+
     // salt
     const salt = randomBytes(8).toString('hex');
 
@@ -22,10 +27,10 @@ export class AuthService {
     // join
     const result = salt + '.' + hash.toString('hex');
 
-    // reassign
-    createUserDto.password = result;
-
-    return this.usersService.create(createUserDto);
+    return this.usersService.create({
+      email: createUserDto.email,
+      password: result,
+    });
   }
 
   async login(loginUserDto: LoginDto): Promise<User> {
