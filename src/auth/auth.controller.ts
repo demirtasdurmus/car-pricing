@@ -1,8 +1,21 @@
-import { Body, Controller, Get, HttpCode, Post, Session } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Get,
+  HttpCode,
+  Post,
+  Session,
+  UseGuards,
+} from '@nestjs/common';
 import { CreateUserDto } from '../users/dto/create-user.dto';
 import { AuthService } from './auth.service';
+import { CurrentUser } from './decorators/current-user.decaorator';
 import { LoginDto } from './dto/login.dto';
+import { Serialize } from '../interceptors/serialize.interceptor';
+import { UserDto } from '../users/dto/user-dto';
+import { AuthGuard } from '../guards/auth.guard';
 
+@Serialize(UserDto)
 @Controller('auth')
 export class AuthController {
   constructor(private readonly authService: AuthService) {}
@@ -31,6 +44,12 @@ export class AuthController {
   @Get('check-auth')
   async checkAuth(@Session() session: any): Promise<object> {
     return session;
+  }
+
+  @Get('whoami')
+  @UseGuards(AuthGuard)
+  whoami(@CurrentUser() data: any) {
+    return data;
   }
 
   @Get('logout')
