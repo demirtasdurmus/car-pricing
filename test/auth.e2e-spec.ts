@@ -33,5 +33,16 @@ describe('AuthController (e2e)', () => {
       expect(res.body.email).toEqual(createUserDto.email);
       expect(res.body.password).toBeUndefined();
     });
+
+    it('should register and logs in the user', async () => {
+      const res = await request(server)
+        .post('/auth/register')
+        .send(createUserDto);
+
+      const cookies = res.get('Set-Cookie');
+
+      expect(res.statusCode).toEqual(201);
+      expect(cookies.length).toBeGreaterThan(0);
+    });
   });
 });
