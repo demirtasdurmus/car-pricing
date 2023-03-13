@@ -14,6 +14,7 @@ import { LoginDto } from './dto/login.dto';
 import { Serialize } from '../interceptors/serialize.interceptor';
 import { UserDto } from '../users/dto/user-dto';
 import { AuthGuard } from '../guards/auth.guard';
+import { User } from 'src/users/user.entity';
 
 @Serialize(UserDto)
 @Controller('auth')
@@ -24,10 +25,10 @@ export class AuthController {
   async register(
     @Body() createUserDto: CreateUserDto,
     @Session() session: any,
-  ): Promise<{ message: string }> {
+  ): Promise<User> {
     const user = await this.authService.register(createUserDto);
     session.id = user.id;
-    return { message: 'success' };
+    return user;
   }
 
   @Post('login')
@@ -35,10 +36,10 @@ export class AuthController {
   async login(
     @Body() loginDto: LoginDto,
     @Session() session: any,
-  ): Promise<{ message: string }> {
+  ): Promise<User> {
     const user = await this.authService.login(loginDto);
     session.id = user.id;
-    return { message: 'success' };
+    return user;
   }
 
   @Get('check-auth')

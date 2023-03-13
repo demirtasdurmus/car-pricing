@@ -61,7 +61,11 @@ describe('AuthController', () => {
       const session: any = {};
       const res = await controller.login(loginDto, session);
 
-      expect(res).toEqual({ message: 'success' });
+      expect(res).toEqual({
+        id: '1',
+        email: 'email@domain.com',
+        password: 'asd.asd',
+      });
       expect(session).toHaveProperty('id');
       expect(session.id).toEqual('1');
     });
