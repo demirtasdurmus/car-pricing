@@ -1,9 +1,9 @@
 import { MiddlewareConsumer, Module, ValidationPipe } from '@nestjs/common';
-import { UsersModule } from './api/users/users.module';
-import { ReportsModule } from './api/reports/reports.module';
+import { UsersModule } from './api/user/user.module';
+import { ReportModule } from './api/report/report.module';
 import { TypeOrmModule, TypeOrmModuleOptions } from '@nestjs/typeorm';
-import { User } from './api/users/user.entity';
-import { Report } from './api/reports/report.entity';
+import { User } from './api/user/user.entity';
+import { Report } from './api/report/report.entity';
 import { AuthModule } from './api/auth/auth.module';
 import { APP_PIPE } from '@nestjs/core';
 import { ConfigModule, ConfigService } from '@nestjs/config';
@@ -28,7 +28,7 @@ const cookieSession = require('cookie-session');
       },
     }),
     UsersModule,
-    ReportsModule,
+    ReportModule,
     AuthModule,
   ],
   providers: [

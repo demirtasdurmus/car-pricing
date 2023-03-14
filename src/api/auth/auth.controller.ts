@@ -7,14 +7,14 @@ import {
   Session,
   UseGuards,
 } from '@nestjs/common';
-import { CreateUserDto } from '../users/dto/create-user.dto';
+import { CreateUserDto } from '../user/dto/create-user.dto';
 import { AuthService } from './auth.service';
 import { CurrentUser } from './decorators/current-user.decorator';
 import { LoginDto } from './dto/login.dto';
 import { Serialize } from '../../interceptors/serialize.interceptor';
-import { UserDto } from '../users/dto/user-dto';
+import { UserDto } from '../user/dto/user-dto';
 import { AuthGuard } from '../../guards/auth.guard';
-import { User } from '../users/user.entity';
+import { User } from '../user/user.entity';
 
 @Serialize(UserDto)
 @Controller('auth')

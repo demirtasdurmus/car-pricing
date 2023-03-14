@@ -11,12 +11,12 @@ import { Serialize } from '../../interceptors/serialize.interceptor';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { UserDto } from './dto/user-dto';
 import { User } from './user.entity';
-import { UsersService } from './users.service';
+import { UserService } from './user.service';
 
 @Serialize(UserDto)
 @Controller('users')
-export class UsersController {
-  constructor(private readonly userService: UsersService) {}
+export class UserController {
+  constructor(private readonly userService: UserService) {}
 
   @Get('/:id')
   async getOne(@Param('id') id: string): Promise<User> {

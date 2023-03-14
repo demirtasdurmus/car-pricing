@@ -1,18 +1,18 @@
 import { BadRequestException } from '@nestjs/common';
 import { Test, TestingModule } from '@nestjs/testing';
-import { CreateUserDto } from '../users/dto/create-user.dto';
-import { User } from '../users/user.entity';
-import { UsersService } from '../users/users.service';
+import { CreateUserDto } from '../user/dto/create-user.dto';
+import { User } from '../user/user.entity';
+import { UserService } from '../user/user.service';
 import { AuthService } from './auth.service';
 import { LoginDto } from './dto/login.dto';
 
 describe('AuthService', () => {
   let service: AuthService;
-  let fakeUsersService: Partial<UsersService>;
+  let fakeUserService: Partial<UserService>;
 
   beforeEach(async () => {
     const users: User[] = [];
-    fakeUsersService = {
+    fakeUserService = {
       find(email: string) {
         const filtered = users.filter((user: User) => user.email === email);
         return Promise.resolve(filtered);
@@ -32,8 +32,8 @@ describe('AuthService', () => {
       providers: [
         AuthService,
         {
-          provide: UsersService,
-          useValue: fakeUsersService,
+          provide: UserService,
+          useValue: fakeUserService,
         },
       ],
     }).compile();

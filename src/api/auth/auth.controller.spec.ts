@@ -1,5 +1,5 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { UsersService } from '../users/users.service';
+import { UserService } from '../user/user.service';
 import { AuthController } from './auth.controller';
 import { AuthService } from './auth.service';
 import { LoginDto } from './dto/login.dto';
@@ -7,7 +7,7 @@ import { LoginDto } from './dto/login.dto';
 describe('AuthController', () => {
   let controller: AuthController;
   let fakeAuthService: Partial<AuthService>;
-  let fakeUsersService: Partial<UsersService>;
+  let fakeUserService: Partial<UserService>;
 
   beforeEach(async () => {
     fakeAuthService = {
@@ -20,7 +20,7 @@ describe('AuthController', () => {
       },
     };
 
-    fakeUsersService = {
+    fakeUserService = {
       async find(email: string) {
         return [
           {
@@ -39,8 +39,8 @@ describe('AuthController', () => {
           useValue: fakeAuthService,
         },
         {
-          provide: UsersService,
-          useValue: fakeUsersService,
+          provide: UserService,
+          useValue: fakeUserService,
         },
       ],
     }).compile();
