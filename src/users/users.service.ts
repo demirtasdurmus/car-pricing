@@ -35,7 +35,7 @@ export class UsersService {
     return this.userRepo.find({ where: { email } });
   }
 
-  async update(id: string, updateUserDto: UpdateUserDto) {
+  async update(id: string, updateUserDto: UpdateUserDto): Promise<User> {
     const user = await this.findOne(id);
     if (!user) throw new NotFoundException('User not found.');
 
@@ -43,7 +43,7 @@ export class UsersService {
     return this.userRepo.save(user);
   }
 
-  async delete(id: string) {
+  async delete(id: string): Promise<User> {
     const user = await this.findOne(id);
     if (!user) throw new NotFoundException('User not found.');
 
