@@ -9,12 +9,12 @@ import {
 } from '@nestjs/common';
 import { CreateUserDto } from '../users/dto/create-user.dto';
 import { AuthService } from './auth.service';
-import { CurrentUser } from './decorators/current-user.decaorator';
+import { CurrentUser } from './decorators/current-user.decorator';
 import { LoginDto } from './dto/login.dto';
-import { Serialize } from '../interceptors/serialize.interceptor';
+import { Serialize } from '../../interceptors/serialize.interceptor';
 import { UserDto } from '../users/dto/user-dto';
-import { AuthGuard } from '../guards/auth.guard';
-import { User } from 'src/users/user.entity';
+import { AuthGuard } from '../../guards/auth.guard';
+import { User } from '../users/user.entity';
 
 @Serialize(UserDto)
 @Controller('auth')

@@ -1,10 +1,10 @@
 import { MiddlewareConsumer, Module, ValidationPipe } from '@nestjs/common';
-import { UsersModule } from './users/users.module';
-import { ReportsModule } from './reports/reports.module';
+import { UsersModule } from './api/users/users.module';
+import { ReportsModule } from './api/reports/reports.module';
 import { TypeOrmModule, TypeOrmModuleOptions } from '@nestjs/typeorm';
-import { User } from './users/user.entity';
-import { Report } from './reports/report.entity';
-import { AuthModule } from './auth/auth.module';
+import { User } from './api/users/user.entity';
+import { Report } from './api/reports/report.entity';
+import { AuthModule } from './api/auth/auth.module';
 import { APP_PIPE } from '@nestjs/core';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 // eslint-disable-next-line @typescript-eslint/no-var-requires

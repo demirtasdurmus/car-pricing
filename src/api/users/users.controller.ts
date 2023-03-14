@@ -7,7 +7,7 @@ import {
   Patch,
   Query,
 } from '@nestjs/common';
-import { Serialize } from '../interceptors/serialize.interceptor';
+import { Serialize } from '../../interceptors/serialize.interceptor';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { UserDto } from './dto/user-dto';
 import { User } from './user.entity';
