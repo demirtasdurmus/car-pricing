@@ -1,5 +1,5 @@
 import { MiddlewareConsumer, Module, ValidationPipe } from '@nestjs/common';
-import { UsersModule } from './modules/user/user.module';
+import { UserModule } from './modules/user/user.module';
 import { ReportModule } from './modules/report/report.module';
 import { TypeOrmModule, TypeOrmModuleOptions } from '@nestjs/typeorm';
 import { User } from './modules/user/user.entity';
@@ -27,7 +27,7 @@ const cookieSession = require('cookie-session');
         };
       },
     }),
-    UsersModule,
+    UserModule,
     ReportModule,
     AuthModule,
   ],

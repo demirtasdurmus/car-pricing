@@ -1,4 +1,5 @@
 import { Expose } from 'class-transformer';
+import { Role } from '../user.entity';
 
 export class UserDto {
   @Expose()
@@ -6,4 +7,7 @@ export class UserDto {
 
   @Expose()
   email: string;
+
+  @Expose()
+  roles: Role;
 }

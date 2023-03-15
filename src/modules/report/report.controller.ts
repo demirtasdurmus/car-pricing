@@ -34,6 +34,7 @@ export class ReportController {
     @CurrentUser() user: User,
     @Body() createReportDto: CreateReportDto,
   ): Promise<Report> {
+    console.log('ddd', user);
     return this.reportService.create(user, createReportDto);
   }
 
