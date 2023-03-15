@@ -2,7 +2,8 @@ import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { User } from '../user/user.entity';
-import { CreateReportDto } from './dto/createReportDto';
+import { CreateReportDto } from './dto/create-report.dto';
+import { GetEstimateDto } from './dto/get-estimate.dto';
 import { UpdateApprovalDto } from './dto/updateApprovalDto';
 import { Report } from './report.entity';
 
@@ -12,8 +13,20 @@ export class ReportService {
     @InjectRepository(Report) private readonly reportRepo: Repository<Report>,
   ) {}
 
-  async findAll(): Promise<Report[]> {
-    return this.reportRepo.find();
+  async getEstimate(getEstimateDto: GetEstimateDto): Promise<Report[]> {
+    return this.reportRepo
+      .createQueryBuilder()
+      .select('AVG(price)', 'estimatedPrice')
+      .where('make = :make', { make: getEstimateDto.make })
+      .andWhere('model = :model', { model: getEstimateDto.model })
+      .andWhere('lng - :lng BETWEEN -5 AND 5', { lng: getEstimateDto.lng })
+      .andWhere('lat - :lat BETWEEN -5 AND 5', { lat: getEstimateDto.lat })
+      .andWhere('year - :year BETWEEN -3 AND 3', { year: getEstimateDto.year })
+      .andWhere('approved = TRUE')
+      .orderBy('ABS(km - :km)', 'DESC')
+      .setParameters({ km: getEstimateDto.km })
+      .limit(3)
+      .getRawOne();
   }
 
   async create(user: User, createUserDto: CreateReportDto): Promise<Report> {
