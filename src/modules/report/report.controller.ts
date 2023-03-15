@@ -15,6 +15,7 @@ import { CreateReportDto } from './dto/createReportDto';
 import { ReportDto } from './dto/report-dto';
 import { Report } from './report.entity';
 import { ReportService } from './report.service';
+import { UpdateApprovalDto } from './dto/updateApprovalDto';
 
 @Controller('reports')
 export class ReportController {
@@ -38,7 +39,10 @@ export class ReportController {
 
   @Patch(':id')
   @UseGuards(AuthGuard)
-  approveReport(@Param('id') id: string): Promise<Report> {
-    return this.reportService.approve(id);
+  updateApproval(
+    @Param('id') id: string,
+    @Body() updateApprovalDto: UpdateApprovalDto,
+  ): Promise<Report> {
+    return this.reportService.updateApproval(id, updateApprovalDto);
   }
 }
