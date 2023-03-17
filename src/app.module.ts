@@ -13,6 +13,7 @@ import { AuthModule } from './modules/auth/auth.module';
 import { APP_PIPE } from '@nestjs/core';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { CurrentUserMiddleware } from './middlewares/current-user.middleware';
+import { IConfig } from './config/config.interface';
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const cookieSession = require('cookie-session');
 
@@ -24,12 +25,17 @@ const cookieSession = require('cookie-session');
     }),
     TypeOrmModule.forRootAsync({
       inject: [ConfigService],
-      useFactory(config: ConfigService): TypeOrmModuleOptions {
+      useFactory(config: ConfigService<IConfig>): TypeOrmModuleOptions {
         return {
-          type: 'sqlite',
+          type: config.get<any>('DB_TYPE'),
           database: config.get<string>('DB_NAME'),
+          host: config.get<string>('DB_HOST'),
+          port: config.get<number>('DB_PORT'),
+          username: config.get<string>('DB_USERNAME'),
+          password: config.get<string>('DB_PASS'),
           entities: [User, Report],
-          synchronize: true,
+          synchronize: config.get<boolean>('DB_SYNC'),
+          installExtensions: true,
         };
       },
     }),
