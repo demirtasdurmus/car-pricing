@@ -20,6 +20,8 @@ describe('AuthController (e2e)', () => {
 
   describe('POST /auth/register', () => {
     const createUserDto: CreateUserDto = {
+      firstName: 'John',
+      lastName: 'Doe',
       email: 'email10@domain.com',
       password: 'password',
     };
