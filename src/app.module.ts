@@ -14,6 +14,7 @@ import { APP_PIPE } from '@nestjs/core';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { CurrentUserMiddleware } from './middlewares/current-user.middleware';
 import { IConfig } from './config/config.interface';
+import { configValidationSchema } from './config/config.schema';
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const cookieSession = require('cookie-session');
 
@@ -22,6 +23,7 @@ const cookieSession = require('cookie-session');
     ConfigModule.forRoot({
       isGlobal: true,
       envFilePath: `.env.${process.env.NODE_ENV}`,
+      validationSchema: configValidationSchema,
     }),
     TypeOrmModule.forRootAsync({
       inject: [ConfigService],
