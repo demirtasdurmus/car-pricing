@@ -1,15 +1,35 @@
-import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
+import {
+  Column,
+  CreateDateColumn,
+  Entity,
+  OneToMany,
+  PrimaryGeneratedColumn,
+  UpdateDateColumn,
+} from 'typeorm';
 import { Report } from '../report/report.entity';
 
-export enum Role {
+export enum EURole {
   USER = 'USER',
   ADMIN = 'ADMIN',
+  DEVELOPER = 'DEVELOPER',
 }
 
-@Entity()
+export enum EUStatus {
+  ACTIVE = 'ACTIVE',
+  PASSIVE = 'PASSIVE',
+  BANNED = 'BANNED',
+}
+
+@Entity({ name: 'users' })
 export class User {
   @PrimaryGeneratedColumn('uuid')
   id: string;
+
+  @Column({ name: 'first_name' })
+  firstName: string;
+
+  @Column({ name: 'last_name' })
+  lastName: string;
 
   @Column({ unique: true })
   email: string;
@@ -17,8 +37,17 @@ export class User {
   @Column()
   password: string;
 
-  @Column({ enum: Role, default: Role.USER })
-  roles: Role;
+  @Column({ enum: EUStatus, default: EUStatus.ACTIVE })
+  status: EUStatus;
+
+  @Column({ enum: EURole, default: [EURole.USER] })
+  roles: EURole;
+
+  @CreateDateColumn({ name: 'created_at', type: 'timestamptz' })
+  createdAt: Date;
+
+  @UpdateDateColumn({ name: 'updated_at', type: 'timestamptz' })
+  updatedAt: Date;
 
   @OneToMany(() => Report, (report) => report.user)
   reports: Report[];

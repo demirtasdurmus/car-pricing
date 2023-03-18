@@ -28,6 +28,8 @@ export class AuthService {
     const result = salt + '.' + hash.toString('hex');
 
     return this.userService.create({
+      firstName: createUserDto.firstName,
+      lastName: createUserDto.lastName,
       email: createUserDto.email,
       password: result,
     });

@@ -1,7 +1,14 @@
-import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
+import {
+  Column,
+  CreateDateColumn,
+  Entity,
+  ManyToOne,
+  PrimaryGeneratedColumn,
+  UpdateDateColumn,
+} from 'typeorm';
 import { User } from '../user/user.entity';
 
-@Entity()
+@Entity({ name: 'reports' })
 export class Report {
   @PrimaryGeneratedColumn('uuid')
   id: string;
@@ -29,6 +36,12 @@ export class Report {
 
   @Column({ default: false })
   approved: boolean;
+
+  @CreateDateColumn({ name: 'created_at', type: 'timestamptz' })
+  createdAt: Date;
+
+  @UpdateDateColumn({ name: 'updated_at', type: 'timestamptz' })
+  updatedAt: Date;
 
   @ManyToOne(() => User, (user) => user.reports)
   user: User;
