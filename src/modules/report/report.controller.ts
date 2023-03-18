@@ -11,13 +11,14 @@ import {
 import { Serialize } from '../../interceptors/serialize.interceptor';
 import { AuthGuard } from '../../guards/auth.guard';
 import { CurrentUser } from '../auth/decorators/current-user.decorator';
-import { User } from '../user/user.entity';
+import { EURole, User } from '../user/user.entity';
 import { CreateReportDto } from './dto/create-report.dto';
 import { ReportDto } from './dto/report-dto';
 import { Report } from './report.entity';
 import { ReportService } from './report.service';
 import { UpdateApprovalDto } from './dto/updateApprovalDto';
 import { GetEstimateDto } from './dto/get-estimate.dto';
+import { Roles } from '../../guards/role.guard';
 
 @Controller('reports')
 export class ReportController {
@@ -40,6 +41,7 @@ export class ReportController {
   }
 
   @Patch(':id')
+  @Roles(EURole.ADMIN, EURole.DEVELOPER, EURole.USER)
   @UseGuards(AuthGuard)
   updateApproval(
     @Param('id') id: string,

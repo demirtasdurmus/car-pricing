@@ -12,7 +12,7 @@ const scrypt = promisify(_scrypt);
 export class AuthService {
   constructor(private readonly userService: UserService) {}
 
-  async register(createUserDto: CreateUserDto): Promise<User> {
+  async register(createUserDto: CreateUserDto): Promise<Partial<User>> {
     const users = await this.userService.find(createUserDto.email);
     if (users.length) {
       throw new BadRequestException('Email in use');
@@ -27,21 +27,22 @@ export class AuthService {
     // join
     const result = salt + '.' + hash.toString('hex');
 
-    return this.userService.create({
+    const newUser = await this.userService.create({
       firstName: createUserDto.firstName,
       lastName: createUserDto.lastName,
       email: createUserDto.email,
       password: result,
     });
+
+    return { id: newUser.id, roles: newUser.roles };
   }
 
-  async login(loginUserDto: LoginDto): Promise<User> {
+  async login(loginUserDto: LoginDto): Promise<Partial<User>> {
     const [user] = await this.userService.find(loginUserDto.email);
 
     if (!user) {
       throw new BadRequestException('Incorrect credentials');
     }
-
     const [salt, storedHash] = user.password.split('.');
 
     const hash = (await scrypt(loginUserDto.password, salt, 32)) as Buffer;
@@ -49,6 +50,7 @@ export class AuthService {
     if (storedHash !== hash.toString('hex')) {
       throw new BadRequestException('Incorrect credentials');
     }
-    return user;
+
+    return { id: user.id, roles: user.roles };
   }
 }

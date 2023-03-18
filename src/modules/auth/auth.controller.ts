@@ -25,9 +25,9 @@ export class AuthController {
   async register(
     @Body() createUserDto: CreateUserDto,
     @Session() session: any,
-  ): Promise<User> {
+  ): Promise<Partial<User>> {
     const user = await this.authService.register(createUserDto);
-    session.id = user.id;
+    session.user;
     return user;
   }
 
@@ -36,9 +36,9 @@ export class AuthController {
   async login(
     @Body() loginDto: LoginDto,
     @Session() session: any,
-  ): Promise<User> {
+  ): Promise<Partial<User>> {
     const user = await this.authService.login(loginDto);
-    session.id = user.id;
+    session.user = user;
     return user;
   }
 
