@@ -1,19 +1,32 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { UserService } from './user.service';
 import { UserController } from './user.controller';
+import { EURole, EUStatus, User } from './user.entity';
 
 describe('UserController', () => {
   let controller: UserController;
   let fakeUserService: Partial<UserService>;
+
+  const mockUser: User = {
+    id: '1',
+    firstName: 'firstName',
+    lastName: 'lastName',
+    email: '',
+    password: 'asd.asd',
+    status: EUStatus.ACTIVE,
+    roles: EURole.USER,
+    createdAt: new Date(),
+    updatedAt: new Date(),
+    reports: [],
+  };
 
   beforeEach(async () => {
     fakeUserService = {
       async find(email: string) {
         return [
           {
-            id: '1',
             email: email,
-            password: 'asd.asd',
+            ...mockUser,
           },
         ];
       },
@@ -41,9 +54,8 @@ describe('UserController', () => {
 
       expect(res).toEqual([
         {
-          id: '1',
           email: 'email@domain.com',
-          password: 'asd.asd',
+          ...mockUser,
         },
       ]);
     });

@@ -44,6 +44,8 @@ describe('AuthService', () => {
 
   describe('Create', () => {
     const createUserDto: CreateUserDto = {
+      firstName: 'John',
+      lastName: 'Doe',
       email: 'email@domain.com',
       password: 'password.hashed-salted',
     };
