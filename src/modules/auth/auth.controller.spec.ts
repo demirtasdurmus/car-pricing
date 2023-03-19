@@ -27,8 +27,8 @@ describe('AuthController', () => {
     fakeAuthService = {
       async login(loginDto: LoginDto) {
         return {
-          email: loginDto.email,
-          ...mockUser,
+          id: mockUser.id,
+          roles: mockUser.roles,
         };
       },
     };
@@ -69,16 +69,16 @@ describe('AuthController', () => {
       email: 'email@domain.com',
       password: 'asd',
     };
-    it('should update session object and return success', async () => {
+    it('should update session object and return session user', async () => {
       const session: any = {};
       const res = await controller.login(loginDto, session);
 
       expect(res).toEqual({
-        email: loginDto.email,
-        ...mockUser,
+        id: mockUser.id,
+        roles: mockUser.roles,
       });
-      expect(session).toHaveProperty('id');
-      expect(session.id).toEqual('1');
+      expect(session).toHaveProperty('user');
+      expect(session.user.id).toEqual('1');
     });
   });
 });

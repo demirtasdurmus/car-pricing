@@ -63,13 +63,12 @@ describe('AuthService', () => {
     password: 'password',
   };
   describe('Register', () => {
-    it('should create a new user with a salted and hashed password', async () => {
+    it('should create a new user and return id and roles', async () => {
       const user = await service.register(createUserDto);
 
-      const [salt, hash] = user.password.split('.');
-      expect(salt).toBeDefined();
-      expect(hash).toBeDefined();
-      expect(user.password).not.toEqual(createUserDto.password);
+      expect(user.id).toBeDefined();
+      expect(user.roles).toBeDefined();
+      expect(typeof user.id).toEqual('string');
     });
 
     it('should throw an error if user registers with email that is in use', async () => {
