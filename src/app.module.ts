@@ -39,6 +39,7 @@ const cookieSession = require('cookie-session');
           entities: [User, Report],
           synchronize: config.get<boolean>('DB_SYNC'),
           installExtensions: true,
+          retryAttempts: 2,
         };
       },
     }),
