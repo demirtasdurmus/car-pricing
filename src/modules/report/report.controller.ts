@@ -21,18 +21,17 @@ import { GetEstimateDto } from './dto/get-estimate.dto';
 import { Roles } from '../../guards/role.guard';
 
 @Controller('reports')
+@UseGuards(AuthGuard)
 export class ReportController {
   constructor(private readonly reportService: ReportService) {}
 
   @Get()
-  @UseGuards(AuthGuard)
   getEstimate(@Query() getEstimateDto: GetEstimateDto): Promise<Report[]> {
     return this.reportService.getEstimate(getEstimateDto);
   }
 
   @Post()
   @Serialize(ReportDto)
-  @UseGuards(AuthGuard)
   createReport(
     @CurrentUser() user: User,
     @Body() createReportDto: CreateReportDto,
@@ -42,7 +41,6 @@ export class ReportController {
 
   @Patch(':id')
   @Roles(EURole.ADMIN, EURole.DEVELOPER, EURole.USER)
-  @UseGuards(AuthGuard)
   updateApproval(
     @Param('id') id: string,
     @Body() updateApprovalDto: UpdateApprovalDto,

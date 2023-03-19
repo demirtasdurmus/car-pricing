@@ -1,4 +1,5 @@
 export interface IConfig {
+  APP_PORT: number;
   DB_TYPE: string;
   DB_NAME: string;
   DB_HOST: string;
