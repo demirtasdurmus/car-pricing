@@ -54,8 +54,8 @@ export class AuthController {
   }
 
   @Get('logout')
-  async logout(@Session() session: any): Promise<{ message: 'success' }> {
-    session.id = null;
-    return { message: 'success' };
+  async logout(@Session() session: any): Promise<void> {
+    session.user = null;
+    return;
   }
 }
