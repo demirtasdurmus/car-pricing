@@ -15,7 +15,7 @@ export class AuthService {
   async register(createUserDto: CreateUserDto): Promise<Partial<User>> {
     const users = await this.userService.find(createUserDto.email);
     if (users.length) {
-      throw new BadRequestException('Email in use');
+      throw new BadRequestException('Email already in use');
     }
 
     // salt
