@@ -34,7 +34,7 @@ export class AuthService {
       password: result,
     });
 
-    return { id: newUser.id, roles: newUser.roles };
+    return { id: newUser.id, email: newUser.email, roles: newUser.roles };
   }
 
   async login(loginUserDto: LoginDto): Promise<Partial<User>> {

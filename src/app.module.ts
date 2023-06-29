@@ -7,8 +7,6 @@ import {
 import { UserModule } from './modules/user/user.module';
 import { ReportModule } from './modules/report/report.module';
 import { TypeOrmModule, TypeOrmModuleOptions } from '@nestjs/typeorm';
-import { User } from './modules/user/user.entity';
-import { Report } from './modules/report/report.entity';
 import { AuthModule } from './modules/auth/auth.module';
 import { APP_PIPE } from '@nestjs/core';
 import { ConfigModule, ConfigService } from '@nestjs/config';
